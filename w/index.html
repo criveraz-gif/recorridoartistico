@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<title>Multimedial</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f6f2f4;
+    margin: 0;
+    color: #3a2b2f;
+}
+
+/* contenedor */
+.contenedor {
+    column-count: 3;
+    column-gap: 20px;
+    width: 95%;
+    margin: auto;
+}
+
+/* bloques */
+.bloque {
+    background-color: #ffffff;
+    margin: 20px 0;
+    border-radius: 12px;
+    overflow: hidden;
+    display: inline-block;
+    width: 100%;
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+/* tamaños pinterest */
+.bloque.grande img {
+    height: 420px;
+    object-fit: cover;
+}
+
+.bloque.mediano img {
+    height: 300px;
+    object-fit: cover;
+}
+
+.bloque.pequeno img {
+    height: 220px;
+    object-fit: cover;
+}
+
+.bloque:hover {
+    transform: translateY(-6px);
+}
+
+.bloque img {
+    width: 100%;
+}
+
+/* contenido */
+.contenido {
+    padding: 15px;
+    background: linear-gradient(to top, rgba(255,255,255,0.9), transparent);
+}
+
+.bloque h2 {
+    margin: 10px 0;
+    color: #7a3e52;
+}
+
+.bloque p {
+    font-size: 14px;
+    color: #6b5b60;
+}
+
+/* modal */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(255,255,255,0.95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.4s;
+}
+
+.modal.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.modal img {
+    max-width: 80%;
+    max-height: 80%;
+}
+
+/* 🔴 BLOQUE ORIGINAL INTEGRADO */
+.footer-extra {
+    text-align: center;
+    margin: 60px 0;
+}
+
+.footer-extra img {
+    border-radius: 10px;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+.footer-extra img:hover {
+    transform: scale(1.05);
+}
+
+.footer-extra a {
+    color: #7a3e52;
+    text-decoration: none;
+}
+
+.footer-extra a:hover {
+    color: #a14a68;
+}
+
+/* responsive */
+@media (max-width: 900px) {
+    .contenedor { column-count: 2; }
+}
+
+@media (max-width: 600px) {
+    .contenedor { column-count: 1; }
+}
+</style>
+
+</head>
+
+<body>
+
+<h1 style="text-align:center; margin:30px;">Mi sitio</h1>
+
+<div class="contenedor">
+
+<div class="bloque grande">
+    <img src="img/mimesis.JPG">
+    <div class="contenido">
+        <h2>mimesis</h2>
+        <p>mimesis de primer año</p>
+        <p>carton piedra con gesso</p>
+        <p>óleo</p>
+        <p></p>
+    </div>
+</div>
+
+<div class="bloque pequeno">
+    <img src="img/bodegonacuarela.JPG">
+    <div class="contenido">
+        <h2>bodegón </h2>
+        <p></p>
+        <p>papel de acuarela</p>
+        <p>acuarela</p>
+        <p></p>
+       
+    </div>
+</div>
+
+<div class="bloque mediano">
+    <img src="img/perrito.JPG">
+    <div class="contenido">
+        <h2>perrito</h2>
+         <p>Encargo personal</p>
+        <p>tela sobre bastidor</p>
+        <p>óleo</p>
+        <p>40 x 40cm</p>
+    </div>
+</div>
+<div class="bloque mediano">
+    <img src="img/autoretratop.JPG">
+    <div class="contenido">
+        <h2>autoretrato</h2>
+         
+        <p>papel kraft</p>
+        <p>tinta china</p>
+    
+    </div>
+</div>
+
+<!-- modal -->
+<div class="modal" id="modal">
+    <img id="modalImg">
+</div>
+
+<script>
+// color dinámico suave
+function getColor(img){
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = img.width;
+    canvas.height = img.height;
+
+    ctx.drawImage(img,0,0);
+
+    let data = ctx.getImageData(0,0,canvas.width,canvas.height).data;
+
+    let r=0,g=0,b=0,c=0;
+
+    for(let i=0;i<data.length;i+=120){
+        r+=data[i];
+        g+=data[i+1];
+        b+=data[i+2];
+        c++;
+    }
+
+    return {
+        r:Math.floor(r/c),
+        g:Math.floor(g/c),
+        b:Math.floor(b/c)
+    };
+}
+
+document.querySelectorAll(".bloque").forEach(b=>{
+    const img = b.querySelector("img");
+    const cont = b.querySelector(".contenido");
+
+    img.onload = ()=>{
+        let col = getColor(img);
+        cont.style.background =
+        `linear-gradient(to top, rgba(${col.r},${col.g},${col.b},0.25), rgba(255,255,255,0.9))`;
+    }
+
+    if(img.complete) img.onload();
+});
+
+// modal
+const modal = document.getElementById("modal");
+const modalImg = document.getElementById("modalImg");
+
+document.querySelectorAll(".bloque img").forEach(img=>{
+    img.addEventListener("click", ()=>{
+        modal.classList.add("active");
+        modalImg.src = img.src;
+    });
+});
+
+modal.addEventListener("click", ()=>{
+    modal.classList.remove("active");
+});
+</script>
+
+<div style="width:95%; margin:80px auto; text-align:center;">
+
+    <h2 style="color:#7a3e52; font-weight:normal; margin-bottom:30px;">
+        INTERACTIVE
+    </h2>
+
+    <div style="
+        display:grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap:20px;
+    ">
+
+        <!-- carpeta simple -->
+        <a href="./pagina2.html" style="
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            height:200px;
+            background:#e9d8df;
+            border-radius:15px;
+            text-decoration:none;
+            color:#5a2a3b;
+            font-size:16px;
+        ">
+            Ir a la página 2
+        </a>
+
+        <!-- carpeta con imagen -->
+        <a href="./obras.html" style="
+            position:relative;
+            display:block;
+            height:200px;
+            border-radius:15px;
+            overflow:hidden;
+        ">
+            <img src="img/cuadrorojo.jpeg" style="
+                width:100%;
+                height:100%;
+                object-fit:cover;
+            ">
+            <span style="
+                position:absolute;
+                bottom:10px;
+                left:15px;
+                color:white;
+                background:rgba(122,62,82,0.6);
+                padding:5px 10px;
+                border-radius:8px;
+            ">
+                Obra
+            </span>
+        </a>
+
+        <!-- carpeta con imagen -->
+        <a href="./contacto.html" style="
+            position:relative;
+            display:block;
+            height:200px;
+            border-radius:15px;
+            overflow:hidden;
+        ">
+            <img src="img/mesadetrabajo.JPG" style="
+                width:100%;
+                height:100%;
+                object-fit:cover;
+            ">
+            <span style="
+                position:absolute;
+                bottom:10px;
+                left:15px;
+                color:white;
+                background:rgba(122,62,82,0.6);
+                padding:5px 10px;
+                border-radius:8px;
+            ">
+                Contacto
+            </span>
+        </a>
+
+    </div>
+
+</div>
