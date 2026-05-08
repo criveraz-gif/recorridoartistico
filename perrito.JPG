@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Contacto</title>
+</head>
+
+<body>
+
+<h1>Contacto</h1>
+
+
+<a href="index.html">Inicio
+<img src="img/1.jpg" alt="Imagen de contacto" width="200"></a><br>
+<a href="obra.html">Obra
+<img src="img/perrito.JPG" alt="Imagen de inicio" width="300"></a><br>
+
+
+</body>
+</html>

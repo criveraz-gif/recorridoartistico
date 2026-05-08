@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>obra</title>
+</head>
+
+<body>
+
+<h1>mimesis</h1>
+
+<a href="obra.html">Volver a la página principal</a>
+<!--<a href="https://www.wikipedia.org" target="_blank">Ir a Wikipedia</a> -->
+<a href="index.html">Inicio
+<img src="img/mimesis.JPG" alt="Imagen de inicio" width="200"></a><br>
+<a href="contacto.html">Contacto
+<img src="img/uva.JPG" alt="Imagen de inicio" width="300"></a>
+</body>
+</html>
